@@ -21,7 +21,17 @@ def chat():
     )
 
     response_message = completion.choices[0].message.content
-    return jsonify({"response": response_message})
+    total_tokens = completion.usage.total_tokens
+    input_tokens = completion.usage.prompt_tokens
+    output_tokens = completion.usage.prompt_tokens
+
+    cost_per_input_token = 0.0000025  # $2.50 per 1M input tokens
+    cost_per_output_token = 0.00001   # $10.00 per 1M output tokens
+
+    total_cost = (input_tokens * cost_per_input_token) + (output_tokens * cost_per_output_token)
+
+    response_with_cost = f"{response_message} ({total_cost:.5f} dollar)"
+    return jsonify({"response": response_with_cost})
 
 if __name__ == '__main__':
     app.run(debug=True)
