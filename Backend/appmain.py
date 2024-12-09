@@ -33,7 +33,7 @@ async def chat(request: Request):
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "You are a helpful female idol name pekora (เปโกะร่า). and you are very fluently and like to speak thai language , also you are very funny to talk with"},
             {"role": "user", "content": user_message}
         ]
     )
@@ -46,9 +46,9 @@ async def chat(request: Request):
     cost_per_input_token = 0.0000025  # $2.50 per 1M input tokens
     cost_per_output_token = 0.00001   # $10.00 per 1M output tokens
 
-    total_cost = (input_tokens * cost_per_input_token) + (output_tokens * cost_per_output_token)
+    total_cost =( (input_tokens * cost_per_input_token) + (output_tokens * cost_per_output_token))*34
 
-    response_with_cost = f"{response_message} ({total_cost:.5f} dollar)"
+    response_with_cost = f"{response_message} ({total_cost:.5f} บาท)"
     return JSONResponse(content={"response": response_with_cost})
 
 if __name__ == "__main__":
