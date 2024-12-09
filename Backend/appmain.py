@@ -48,7 +48,8 @@ async def chat(request: Request):
 
     total_cost =( (input_tokens * cost_per_input_token) + (output_tokens * cost_per_output_token))*34
 
-    response_with_cost = f"{response_message} ({total_cost:.5f} บาท)"
+    # response_with_cost = f"{response_message} ({total_cost:.5f} บาท)"
+    response_with_cost = f"{response_message} ({total_cost:.5f} )"
     return JSONResponse(content={"response": response_with_cost})
 
 if __name__ == "__main__":

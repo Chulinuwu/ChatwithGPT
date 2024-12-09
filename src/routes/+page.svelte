@@ -4,7 +4,7 @@
 
     let userInput = '';
     let chatboxContent = '';
-    let isSidebarOpen = true;
+    let isSidebarOpen = false;
     let messageId = 0;
     let array_message: { id: number, content: string }[] = [];
     let chatbox: HTMLElement | null = null;
@@ -102,7 +102,7 @@
 <div class="flex h-screen bg-white text-black">
     <!-- Sidebar -->
     <div
-        class="bg-white p-4 shadow-lg transition-transform transform duration-300 z-50 absolute h-full"
+        class="bg-white p-4 shadow-lg transition-transform min-w-[200px] transform duration-300 z-50 max-md:hidden absolute h-full"
         style="width: 25%;"
         class:-translate-x-full={!isSidebarOpen}
     >
@@ -125,7 +125,7 @@
             <h1 class="text-2xl font-bold">Peko Chat</h1>
             <button
                 on:click={toggleSidebar}
-                class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
+                class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 max-md:hidden"
             >
                 Toggle Sidebar
             </button>
