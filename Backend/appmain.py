@@ -1,15 +1,33 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from openai import OpenAI
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
 
-app = Flask(__name__)
-CORS(app)
+# Load environment variables from .env file
+load_dotenv()
 
-client = OpenAI()
+app = FastAPI()
 
-@app.route('/chat', methods=['POST'])
-def chat():
-    data = request.json
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+api_key = os.getenv("API_KEY")
+if not api_key:
+    raise ValueError("API_KEY not found in environment variables")
+
+
+client = OpenAI(api_key=api_key)
+
+@app.post("/chat")
+async def chat(request: Request):
+    data = await request.json()
     user_message = data.get('message')
 
     completion = client.chat.completions.create(
@@ -31,7 +49,8 @@ def chat():
     total_cost = (input_tokens * cost_per_input_token) + (output_tokens * cost_per_output_token)
 
     response_with_cost = f"{response_message} ({total_cost:.5f} dollar)"
-    return jsonify({"response": response_with_cost})
+    return JSONResponse(content={"response": response_with_cost})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("appmain:app", host="0.0.0.0", port=8000, reload=True)
