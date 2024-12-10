@@ -8,10 +8,14 @@ Create a new file named .env.
 API_KEY = YOUR OPENAI API KEY HERE
 ```
 
-Then pip install necessary library 
+Then pip install necessary library and run your python file
 
 ```bash
 pip install -r requirements.txt
+```
+
+```bash
+python appmain.py
 ```
 
 ## Install Front-end Lib:
