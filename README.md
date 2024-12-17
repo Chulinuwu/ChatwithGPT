@@ -1,4 +1,3 @@
-![Project Logo](./chat.png)
 
 ## Create the .env file:
 Navigate to the Backend folder in your project.
